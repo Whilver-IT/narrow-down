@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>デバッグで役に立つSQL</title>
+<link href="css/common.css" rel="stylesheet">
+<link href="css/sql.css" rel="stylesheet">
+<script src="js/common.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <section class="title">
+                <h1>デバッグで役に立つSQL</h1>
+            </section>
+            <div class="sqllist">
+                <span>こういう場合これさえ覚えていればいい(MySQL)</span>
+                <div>
+                    <span>WITH&ensp;main&ensp;AS (</span><br>
+                    <span class="left1">SELECT&ensp;DISTINCT</span><br>
+                    <span class="left2">col_r,</span><br>
+                    <span class="left2">CONCAT(col_p,&ensp;'|',&ensp;col_c)&ensp;AS&ensp;col_pc,</span><br>
+                    <span class="left2">col_j,</span><br>
+                    <span class="left2 red">CAST(</span><br>
+                    <span class="left3 red">CONCAT(</span><br>
+                    <span class="left4 red">'[',</span><br>
+                    <span class="left4 red">GROUP_CONCAT(DISTINCT&ensp;CONCAT('"',&ensp;col_i,&ensp;'"')&ensp;ORDER&ensp;BY&ensp;col_i),</span><br>
+                    <span class="left4 red">']'</span><br>
+                    <span class="left3 red">)</span><br>
+                    <span class="left2 red">)&ensp;AS&ensp;JSON)&ensp;AS&ensp;col_i</span><br>
+                    <span class="left1">FROM</span><br>
+                    <span class="left2">goods</span><br>
+                    <span class="left1">GROUP&ensp;BY</span><br>
+                    <span class="left2">col_r,</span><br>
+                    <span class="left2">col_pc,</span><br>
+                    <span class="left2">col_j</span><br>
+                    <span>)</span><br>
+                    <span>SELECT&ensp;DISTINCT&ensp;col_r&ensp;FROM&ensp;main&ensp;</span><br>
+                    <span>WHERE&ensp;col_pc&ensp;=&ensp;'{col_pc_selected}'</span><br>
+                    <span>AND&ensp;col_j&ensp;=&ensp;'{col_j_selected}'</span><br>
+                    <span class="red">AND&ensp;JSON_CONTAINS(col_i,&ensp;'["I04","I09"]')</span>
+                </div>
+            </div>
+            <div class="sqllist">
+                <span>PostgreSQLの場合</span>
+                <div>
+                    <span>WITH&ensp;main&ensp;AS (</span><br>
+                    <span class="left1">SELECT&ensp;DISTINCT</span><br>
+                    <span class="left2">col_r,</span><br>
+                    <span class="left2">col_p&ensp;||&ensp;'|'&ensp;||&ensp;col_c&ensp;AS&ensp;col_pc,</span><br>
+                    <span class="left2">col_j,</span><br>
+                    <span class="left2 red">('['&ensp;||&ensp;ARRAY_TO_STRING(ARRAY_AGG(DISTINCT&ensp;'"'&ensp;||&ensp;col_i&ensp;||&ensp;'"',&ensp;','))&ensp;||&ensp;']')::jsonb&ensp;AS&ensp;col_i</span><br>
+                    <span class="left1">FROM</span><br>
+                    <span class="left2">goods</span><br>
+                    <span class="left1">GROUP&ensp;BY</span><br>
+                    <span class="left2">col_r,</span><br>
+                    <span class="left2">col_pc,</span><br>
+                    <span class="left2">col_j</span><br>
+                    <span>)</span><br>
+                    <span>SELECT&ensp;DISTINCT&ensp;col_r&ensp;FROM&ensp;main&ensp;</span><br>
+                    <span>WHERE&ensp;col_pc&ensp;=&ensp;'{col_pc_selected}'</span><br>
+                    <span>AND&ensp;col_j&ensp;=&ensp;'{col_j_selected}'</span><br>
+                    <span class="red">AND&ensp;col_i&ensp;@&gt;&ensp;'["I04","I09"]'::jsonb</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>

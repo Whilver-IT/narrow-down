@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.title {
+	padding: 20px 0 10px 3rem
+}
+
+.name {
+	font-size: 2rem;
+	padding: 5px 0 0 5rem;
+}
+
+.explain {
+	font-size: 2rem;
+	padding: 30px 0 0 5.5rem;
+}

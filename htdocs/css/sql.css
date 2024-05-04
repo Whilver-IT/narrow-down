@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.title {
+    padding: 20px 0 10px 3rem
+}
+
+.sqllist {
+    padding: 0 0 0 7rem;
+    font-size: 2rem;
+}
+
+.sqllist:nth-of-type(n+2) {
+    margin: 1.5rem 0 0 0;
+}
+
+.sqllist div {
+    margin: 10px 0 0 1.5rem;
+    font-size: 1.5rem;
+}
+
+.sqllist .left1 {
+    margin: 0 0 0 3rem;
+}
+
+.sqllist .left2 {
+    margin: 0 0 0 6rem;
+}
+
+.sqllist .left3 {
+    margin: 0 0 0 9rem;
+}
+
+.sqllist .left4 {
+    margin: 0 0 0 12rem;
+}
+
+.sqllist .red {
+    color: #f00;
+    font-weight: bold;
+}

@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.title {
+    padding: 20px 0 10px 3rem
+}
+
+.logiclist {
+    padding: 0 0 0 7rem;
+    font-size: 2rem;
+}
+
+.logicmain:nth-of-type(n+2) {
+    margin: 50px 0 0 0;
+}
+
+.logicitem {
+    list-style: none;
+    font-size: 0.8em;
+}

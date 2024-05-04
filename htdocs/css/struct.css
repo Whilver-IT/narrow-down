@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+.title {
+    padding: 20px 0 10px 3rem
+}
+
+.structlist {
+    display: flex;
+    width: 100%;
+    font-size: 2rem;
+}
+
+.structlist .csv {
+    text-align: center;
+    width: 50%;
+}
+
+.structlist .table {
+    text-align: left;
+    width: 50%;
+}
+
+.csv div,
+.table div {
+    margin: 10px 0 0 0;
+    font-size: 24px;
+}
+
+.ml-sql {
+    margin: 0 0 0 2.5rem;
+}

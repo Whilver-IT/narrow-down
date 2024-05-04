@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+:-webkit-any(article, aside, nav, section) * {
+    font-size: inherit;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+html,body {
+    height: 100%;
+}
+
+body {
+    background-color: #f4f5f7;
+    padding: 5px 0 0 0;
+    width: 100%;
+}
+
+.header {
+    padding: 5px 0 0 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 0 0 0 5px;
+}
+
+.title {
+    font-size: 2.5rem;
+    height: auto;
+}
+
+footer {
+    background-color: #023e98;
+    color: #f4f5f7;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    height: 1.5rem;
+    margin: 40px 0 0 0;
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible !important;
+}
+
+a {
+    color: #023e98;
+    text-decoration: none;
+}

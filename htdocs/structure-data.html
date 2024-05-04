@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>構成要素(データ構造)</title>
+<link href="css/common.css" rel="stylesheet">
+<link href="css/struct.css" rel="stylesheet">
+<script src="js/common.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <section>
+                <h1 class="title">構成要素(データ構造)</h1>
+            </section>
+            <section class="structlist">
+                <div class="csv">
+                    <h1>CSV</h1>
+                    <div>
+                        "R01","J01","I11","P1","C1"<br>
+                        "R01","J01","I09","P1","C1"<br>
+                        "R01","J02","I09","P1","C1"<br>
+                        ・<br>
+                        ・<br>
+                        ・<br>
+                        "R09","J11","I13","P2","C2"<br>
+                        "R09","J12","I09","P2","C2"<br>
+                        "R10","J11","I06","P2","C2"
+                    </div>
+                </div>
+                <div class="table">
+                    <h1>テーブル(MySQL)</h1>
+                    <div>
+                        <span>CREATE TABLE goods (</span><br>
+                        <span class="ml-sql">id&ensp;SMALLINT&ensp;UNSIGNED&ensp;AUTO_INCREMENT,</span><br>
+                        <span class="ml-sql">col_r&ensp;VARCHAR(3)&ensp;NOT&ensp;NULL,</span><br>
+                        <span class="ml-sql">col_p&ensp;VARCHAR(3)&ensp;NOT&ensp;NULL,</span><br>
+                        <span class="ml-sql">col_c&ensp;VARCHAR(3)&ensp;NOT&ensp;NULL,</span><br>
+                        <span class="ml-sql">col_j&ensp;VARCHAR(3)&ensp;NOT&ensp;NULL,</span><br>
+                        <span class="ml-sql">col_i&ensp;VARCHAR(3)&ensp;NOT&ensp;NULL,</span><br>
+                        <span class="ml-sql">PRIMARY&ensp;KEY(id)</span><br>
+                        <span>);</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>

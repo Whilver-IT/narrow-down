@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+.title {
+    padding: 20px 0 10px 3rem
+}
+
+.jsonlist {
+    display: flex;
+    width: 100%;
+    font-size: 2rem;
+    padding: 0 0 0 4rem;
+}
+
+.jsonlist .json {
+    padding: 5px 0 0 2.5rem;
+    width: 100%;
+}
+
+.jsonlist .json .left {
+    margin: 0 0 0 1rem;
+}
+.jsonlist .json .left1 {
+    margin: 0 0 0 4rem;
+}
+.jsonlist .json .left2 {
+    margin: 0 0 0 8rem;
+}
+.jsonlist .json .left3 {
+    margin: 0 0 0 12rem;
+}
+.jsonlist .json .left4 {
+    margin: 0 0 0 16rem;
+}
+

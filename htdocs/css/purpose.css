@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.title {
+    padding: 20px 0 10px 3rem
+}
+
+.purposelist {
+    padding: 0 0 0 7rem;
+    font-size: 2rem;
+}
+
+.purposemain:nth-of-type(n+2) {
+    margin: 50px 0 0 0;
+}
+
+.purposeitem {
+    list-style: none;
+    font-size: 0.8em;
+}

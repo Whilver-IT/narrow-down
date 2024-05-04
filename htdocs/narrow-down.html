@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>検索条件の絞り込み方</title>
+<link href="css/common.css" rel="stylesheet">
+<link href="css/narrow-down.css" rel="stylesheet">
+<script src="js/common.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <section class="title">
+                <h1>検索条件の絞り込み方</h1>
+            </section>
+            <div class="narrow-downlist">
+                <ul>
+                    <li class="narrow-downmain">条件と仕様</li>
+                    <li class="narrow-downitem">(1)絞り込んだのちもなるべく多くの選択を可能にする</li>
+                    <li class="narrow-downitem">(2)R、PC、Jは1つだけ選択可能で、Iに関しては属するJの中では複数選択可能</li>
+                    <li class="narrow-downitem">(3)R、PC、J、Iを同時に複数条件選択することはできない(1つずつしか選べない)</li>
+                    <li class="narrow-downmain">具体的にはどうしたらよいの!?</li>
+                    <li class="narrow-downitem">条件が選択された時点で絞り込みを行う</li>
+                    <li class="narrow-downitem">選択したカテゴリの選択肢は絞り込まない</li>
+                    <li class="narrow-downitem">例えば、Rを選択したらR自体の選択肢は変化なし</li>
+                    <li class="narrow-downitem">PC、J、IのみRによって絞り込む</li>
+                    <li class="narrow-downitem">PC、Jについては上記と同様。但しIに関しては属するJ内の選択しかできないので絞り込む</li>
+                    <li class="narrow-downmain">Iの絞り込みについて</li>
+                    <li class="narrow-downitem">選択した値がすべて含まれるJに属するIの範囲のみに絞り込まれる</li>
+                    <li class="narrow-downitem">但し重複する値は1つにする</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>
