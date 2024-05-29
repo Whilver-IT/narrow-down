@@ -357,9 +357,10 @@ document.addEventListener('DOMContentLoaded', (dcl) => {
                         if (!this.#data['base']['j'].includes(j)) {
                             this.#data['base']['j'].push(j)
                         }
-                        if (Object.keys(this.#json[r][pc][j]).length > 1) {                            
-                            if (!this.#data['base']['i']['multi'].some(item => JSON.stringify(item) == JSON.stringify(this.#json[r][pc][j]))) {
-                                this.#data['base']['i']['multi'].push(this.#json[r][pc][j])
+                        if (Object.keys(this.#json[r][pc][j]).length > 1) {   
+                            const multi = Object.values(this.#json[r][pc][j])
+                            if (!this.#data['base']['i']['multi'].some(item => JSON.stringify(item) == JSON.stringify(multi))) {
+                                this.#data['base']['i']['multi'].push(multi)
                             }
                         }
                         for (const index in this.#json[r][pc][j]) {
@@ -654,17 +655,21 @@ document.addEventListener('DOMContentLoaded', (dcl) => {
 
             const selectableI = []
             for (const r in this.#json) {
+                // Rを対象とする条件
                 const isAddR = !this.#selected['r'].length || (this.#selected['r'].length && this.#selected['r'] == r)
                 for (const pc in this.#json[r]) {
+                    // PCを対象とする条件
                     const isAddPc = !this.#selected['pc'].length || (this.#selected['pc'].length && this.#selected['pc'] == pc)
                     for (const j in this.#json[r][pc]) {
-                        
+                        // Jを対象とする条件
                         const isAddJ = !this.#selected['j'].length || (this.#selected['j'].length && this.#selected['j'] == j)
                         
                         if (isAddR && isAddPc && isAddJ) {
+                            // R、PC、Jが対象の場合に、Iを絞り込む
                             let isSelectable = true
                             const values = Object.values(this.#json[r][pc][j])
                             if (this.#selected['i'].length) {
+                                // Iが選択された場合は、選択されたIが含まれる場合に対象とする
                                 const duplicate = [...new Set([...this.#selected['i'], ...values])].filter((item) => {
                                     return this.#selected['i'].includes(item) &&  values.includes(item)
                                 }).sort(this.#simpleSort)
@@ -685,17 +690,141 @@ document.addEventListener('DOMContentLoaded', (dcl) => {
             return selectableI.sort(this.#simpleSort)
         }
 
+        /**
+         * テスト
+         */
+        test() {
+            const backup = JSON.parse(JSON.stringify(this.#selected))
+            let limit = 0
+            this.#data['base']['i']['multi'].forEach((value) => {
+                if (limit < value.length) {
+                    limit = value.length
+                }
+            })
+
+            let csv = "R(選択値),PC(選択値),J(選択値),I(選択値),R(選択可能値),PC(選択可能値),J(選択可能値),I(選択可能値)\r\n"
+            for (const i of [[], ...this.#getCombinationAll(this.#data['base']['i']['single'], limit)]) {
+                for (const j of ['', ...this.#data['base']['j']]) {
+                    for (const pc of ['', ...this.#data['base']['pc']]) {
+                        for (const r of ['', ...this.#data['base']['r']]) {
+                            if (r == '' && pc == '' && j == '' && !i.length) {
+                                continue
+                            }
+                            this.#selected['r'] = r
+                            this.#selected['pc'] = pc
+                            this.#selected['j'] = j
+                            this.#selected['i'] = i
+                            const dispR = this.#narrowDownR()
+                            const dispPC = this.#narrowDownPc()
+                            const dispJ = this.#narrowDownJ()
+                            const dispI = this.#narrowDownI()
+                            if (dispR.length && dispPC.length && dispJ.length && dispI.length) {
+                                csv += '"' + (r.length ? r : '(なし)') + '"'
+                                csv += ','
+                                csv += '"' + (pc.length ? pc : '(なし)') + '"'
+                                csv += ','
+                                csv += '"' + (j.length ? j : '(なし)') + '"'
+                                csv += ','
+                                csv += '"' + (i.length ? i.join(',') : '(なし)') + '"'
+                                csv += ','
+                                csv += '"' + dispR.join(',') + '"'
+                                csv += ','
+                                csv += '"' + dispPC.join(',') + '"'
+                                csv += ','
+                                csv += '"' + dispJ.join(',') + '"'
+                                csv += ','
+                                csv += '"' + dispI.join(',') + '"'
+                                csv += "\r\n"
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.#selected = backup
+            const url = URL.createObjectURL(new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], {type: 'text/csv'}))
+            const option = {
+                year: 'numeric',
+                month: '2-digit',
+                day:  '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            }
+            const filename = 'narrow_down_test-' + new Date().toLocaleDateString('ja-JP', option).replaceAll('/', '').replaceAll(':', '').replaceAll(' ', '') + '.csv'
+            const a = document.createElement('a')
+            a.href = url
+            a.download = filename
+            a.click()
+        }
+
+        /**
+         * コンビネーション(全体)取得
+         */
+        #getCombinationAll(arr, limit = -1) {
+            let combinationAll = []
+            for (let i = 0; i < arr.length; i++) {
+                if (i + 1 > limit) {
+                    break
+                }
+                combinationAll = [...combinationAll, ...this.#getCombination(arr, i + 1)]
+            }
+
+            return combinationAll
+        }
+
+        /**
+         * コンビネーション(一部)取得
+         * @param {*} arr 
+         * @param {*} count 
+         * @returns 
+         */
+        #getCombination(arr, count) {
+
+            const combinations = []
+
+            if (arr.length < count) {
+                return []
+            }
+            if (count === 1) {
+                arr.forEach((item) => {
+                    combinations.push([item])
+                })
+            } else {
+                for (let i = 0; i < arr.length - count + 1; i++) {
+                    const recursion = this.#getCombination(arr.slice(i + 1), count - 1).sort(this.#iSort)
+                    for (const recursionItem of recursion) {
+                        const addItem = [arr[i], ...recursionItem].sort(this.#simpleSort)
+                        const isAdd = this.#data['base']['i']['multi'].some((multiItem) => {
+                            const duplicate = [...new Set([...addItem, ...multiItem])].filter((item) => {
+                                return addItem.includes(item) && multiItem.includes(item)
+                            }).sort(this.#simpleSort)
+                            return JSON.stringify(duplicate) == JSON.stringify(addItem)
+                        })
+                        if (isAdd) {
+                            combinations.push(addItem)
+                        }
+                    }
+                }
+            }
+                
+            return combinations
+        } 
+
     }
 
     const goods = new Goods(json)
-    const setEvent = async (type, event, isAdd = true) => {
-        for (const b of document.querySelectorAll('button')) {
-            if (isAdd) {
-                b.addEventListener(type, event)
-            } else {
-                b.removeEventListener(type, event)
+    const setEvent = (type, event, isAdd = true) => {
+        return new Promise((resolve, reject) => {
+            for (const b of document.querySelectorAll('button')) {
+                if (isAdd) {
+                    b.addEventListener(type, event)
+                } else {
+                    b.removeEventListener(type, event)
+                }
             }
-        }
+            resolve()
+        })
     }
 
     const clickEvent = async (e) => {
@@ -711,4 +840,14 @@ document.addEventListener('DOMContentLoaded', (dcl) => {
     }
 
     setEvent('click', clickEvent)
+
+    const btnTest = document.getElementById('btnTest')
+    if (btnTest) {
+        const testEvent = (e) => {
+            btnTest.removeEventListener('click', testEvent)
+            goods.test()
+            btnTest.addEventListener('click', testEvent)
+        }
+        btnTest.addEventListener('click', testEvent)
+    }
 })

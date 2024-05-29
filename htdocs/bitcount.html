@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ビットカウント</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+<link href="css/common.css" rel="stylesheet">
+<link href="css/bitcount.css" rel="stylesheet">
+<script src="js/common.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <section class="title">
+                <h1>ビットカウント</h1>
+            </section>
+            <div class="bitcountlist">
+                <ul>
+                    <li class="bitcountmain">ビットカウントとは</li>
+                    <li class="bitcountitem">ある10進数を2進数にしたときの、ビットが立っている個数</li>
+                    <li class="bitcountitem">コンビネーション\({}_n \mathrm{C}_r\)の組み合わせを求めるときに考えやすい</li>
+                </ul>
+            </div>
+            <div class="bitcountlist">
+                <span>例えば4つのうちから2つを選ぶ場合</span>
+                <div>
+                    <table>
+                        <tbody>
+                            <tr><th>10進数</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+                            <tr><th>2進数</th><td class="del">0000</td><td class="del">0001</td><td class="del">0010</td><td>0011</td><td class="del">0100</td><td>0101</td><td>0110</td><td class="del">0111</td><td class="del">1000</td><td>1001</td><td>1010</td><td class="del">1011</td><td>1100</td><td class="del">1101</td><td class="del">1110</td><td class="del">1111</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <span>実際には2進数表記の1が立っているインデックスが欲しい</span>
+            </div>
+            <div class="bitcountlist">
+                <ul>
+                    <li class="bitcountmain">実際のアルゴリズム</li>
+                    <li class="bitcountitem">実はPHPにもライブラリがあるが今回は自前で(GMP関数：gmp_popcount)</li>
+                    <li class="bitcountitem">以下の理論が凄すぎる(こんなのよー考えたわ!!w)</li>
+                    <li class="bitcountitem"><a href="https://www.nminoru.jp/~nminoru/programming/bitcount.html" target="_blank">https://www.nminoru.jp/~nminoru/programming/bitcount.html</a></li>
+                    <li class="bitcountitem"><a href="https://qiita.com/zawawahoge/items/8bbd4c2319e7f7746266" target="_blank">https://qiita.com/zawawahoge/items/8bbd4c2319e7f7746266</a></li>
+                    <li class="bitcountitem">以上を踏まえて、自前で実装。但し実際には効率はよくない</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>

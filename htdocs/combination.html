@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>コンビネーション</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+<link href="css/common.css" rel="stylesheet">
+<link href="css/combination.css" rel="stylesheet">
+<script src="js/common.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <section class="title">
+                <h1>コンビネーション</h1>
+            </section>
+            <div class="codelist">
+                <span>コンビネーションの個数を求めるのは以下</span>
+                <div>
+                    \begin{eqnarray}
+                        {}_n \mathrm{C}_r = \frac{n!}{k! (n-r)!}
+                    \end{eqnarray}
+                </div>
+            </div>
+            <div class="codelist">
+                <span>実際には個数よりもすべての組み合わせのパターンが欲しい</span>
+                <div>
+                    \begin{eqnarray}
+                        \\ &[1,2,3,4]ならば&
+                        \\ &[1],[2],[3],[4]&
+                        \\ &[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]&
+                        \\ &[1,2,3],[1,2,4],[1,3,4],[2,3,4]&
+                        \\ &[1,2,3,4]&
+                    \end{eqnarray}
+                </div>
+            </div>
+            <div class="codelist">
+                <span>ロジック(n個の配列のすべての組み合わせを求める)は以下(PHP)</span>
+                <span class="left"><a href="https://www.programmingalgorithms.com/algorithm/unique-combinations">https://www.programmingalgorithms.com/algorithm/unique-combinations/</a></span>
+                <pre>
+        function GeneralCombinations($arr)
+        {
+            $combinations = [];
+            $length = count($arr);
+            for ($i = 0; $i < (1 << $length); ++$i) {
+                $combination = [];
+                $count = 0;
+                for ($count = 0; $count < $length; ++$count) {
+                    if (($i & 1 << $count) > 0)
+                        $combination[] = $arr[$count];
+                }
+
+                if ($count > 0 && count($combination) > 0) {
+                    $combinations[] = $combination;
+                }
+            }
+
+            return $combinations;
+        }
+                </pre>
+                <span>メリット：&ensp;コード量が少ない</span><br>
+                <span>デメリット：&ensp;n個以上要らない場合でも全ループ回す必要がある(出力配列長が1、2...とならないため)</span>
+            </div>
+            <div class="codelist">
+                <span>ロジック(n個の配列のk個の組み合わせを求める)は以下(PHP)</span>
+                <span class="left"><a href="https://qiita.com/nekohan/items/d58eaca914795e2529e3">https://qiita.com/nekohan/items/d58eaca914795e2529e3</a></span>
+                <pre>
+        function combination(array $arr, int $r): ?array
+        {
+            // 重複した値を削除して，数値添字配列にする
+            $arr = array_values(array_unique($arr));
+        
+            $n = count($arr);
+            $result = []; // 最終的に二次元配列にして返す
+        
+            // nCr の条件に一致していなければ null を返す
+            if($r < 0 || $n < $r){ return null; }
+        
+            if($r === 1){
+                foreach($arr as $item){
+                    $result[] = [$item];
+                }
+            }
+        
+            if($r > 1){
+                // n - r + 1 回ループ
+                for($i = 0; $i < $n-$r+1; $i++){
+                    // $sliced は $i + 1 番目から末尾までの要素
+                    $sliced = array_slice($arr, $i + 1);
+                    // 再帰処理 二次元配列が返ってくる
+                    $recursion = combination($sliced, $r - 1);
+                    foreach($recursion as $one_set){
+                        array_unshift($one_set, $arr[$i]);
+                        $result[] = $one_set;
+                    }
+                }
+            }
+        
+            return $result;
+        }
+                </pre>
+                <span>メリット：&ensp;コードの意味がわかりやすい</span><br>
+                <span>デメリット：&ensp;個数によっては再帰を使用しているため、スタックオーバーフローの危険性</span>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>

@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+.title {
+    padding: 20px 0 10px 3rem
+}
+
+.bitcountlist {
+    padding: 0 0 0 7rem;
+    font-size: 2rem;
+}
+
+.bitcountlist table,
+.bitcountlist table tr,
+.bitcountlist table th,
+.bitcountlist table td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    width: auto;
+}
+
+.bitcountlist table th,
+.bitcountlist table td {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.bitcountlist table td {
+    text-align: right;
+}
+
+.bitcountlist table td.del {
+    text-decoration: line-through;
+}
+
+.bitcountlist:nth-of-type(n+2),
+.bitcountmain:nth-of-type(n+2) {
+    margin: 50px 0 0 0;
+}
+
+.bitcountitem {
+    list-style: none;
+    font-size: 0.8em;
+}
+
+
+
+.codelist {
+    font-size: 2rem;
+}
+
+.codelist:nth-of-type(n+2) {
+    margin: 6rem 0 0 0;
+}
+
+.codelist span {
+    margin: 0 0 0 7rem;
+}
+
+.codelist div {
+    margin: 10px 0 0 1.5rem;
+    font-size: 1.5rem;
+}
+
+.codelist .left {
+    padding: 0 0 0 3rem;
+}
+

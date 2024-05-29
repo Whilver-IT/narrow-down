@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.title {
+    padding: 20px 0 10px 3rem
+}
+
+.codelist {
+    font-size: 2rem;
+}
+
+.codelist:nth-of-type(n+2) {
+    margin: 6rem 0 0 0;
+}
+
+.codelist span {
+    margin: 0 0 0 7rem;
+}
+
+.codelist div {
+    margin: 10px 0 0 1.5rem;
+    font-size: 1.5rem;
+}
+
+.codelist .left {
+    padding: 0 0 0 3rem;
+}

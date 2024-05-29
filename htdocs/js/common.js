@@ -21,6 +21,14 @@
         'sql',
         'conclusionlist',
         'conclusion',
+        'bonuslist',
+        'bonus',
+        'combinationlist',
+        'combination',
+        'recursionlist',
+        'recursion',
+        'bitcountlist',
+        'bitcount',
     ] 
 
     static #menuList = [
@@ -32,6 +40,10 @@
         '具体的なロジック',
         'デバッグ時に役に立つSQL',
         'まとめ',
+        'おまけ(デバッグにおけるコンビネーション、再帰、ビットカウントなど)',
+        'コンビネーション',
+        '再帰',
+        'ビットカウント',
     ]
     
     static #footerMsg = [
@@ -61,8 +73,9 @@
     }
 
     static #getNowPage() {
-        const pos = location.pathname.lastIndexOf('/')
-        return (pos == -1 ? location.pathname : location.pathname.substring(pos + 1)).replace('.html', '')
+        const pathname = location.pathname == '/' ? '/index.html' : location.pathname
+        const pos = pathname.lastIndexOf('/')
+        return (pos == -1 ? pathname : pathname.substring(pos + 1)).replace('.html', '')
     }
 
     static getMovePage(direction) {
@@ -70,7 +83,8 @@
         const index = PageUtils.#pageList.indexOf(curr)
         let nextPage = null
         if (index != -1 && index + direction >= 0 && index + direction < PageUtils.#pageList.length) {
-            nextPage = location.href.replace(curr + '.html', PageUtils.#pageList[index + direction] + '.html')
+            const href = location.pathname == '/' ? (location.href + 'index.html') : location.href
+            nextPage = href.replace(curr + '.html', PageUtils.#pageList[index + direction] + '.html')
         }
         return nextPage
     }
