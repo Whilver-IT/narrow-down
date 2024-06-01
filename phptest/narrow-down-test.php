@@ -40,7 +40,7 @@ class NarrowDownTest {
      * テスト実行
      *
      */
-    public function exec(array $argv = []): void
+    public function exec(): void
     {
         $limit = ini_get('memory_limit');
         ini_set('memory_limit', -1);
@@ -92,10 +92,10 @@ SQL;
             'isHash' => false,
         ];
 
-$start = new DateTimeImmutable();
+//$start = new DateTimeImmutable();
         $iList = $this->getCombinationAll($searchList['i']['single'], $options);
-$end = new DateTimeImmutable();
-echo ($start->diff($end))->format('%s.%F')."\n";exit;
+//$end = new DateTimeImmutable();
+//echo ($start->diff($end))->format('%s.%F')."\n";exit;
 
         // 1つ目に未選択の条件を追加
         array_unshift($searchList['r'], '');
@@ -113,7 +113,7 @@ echo ($start->diff($end))->format('%s.%F')."\n";exit;
         $iList[] = ['I01'];*/
 
 
-        // CSV作成(javascriptの方はBOM付きにしているので、必要なら頭にBOMを付けてください)
+        // CSV作成
         $csv = "R(選択値),PC(選択値),J(選択値),I(選択値),R(選択可能値),PC(選択可能値),J(選択可能値),I(選択可能値)\r\n";
         for ($iLoop = 0; $iLoop < count($iList); $iLoop++) {
             for ($jLoop = 0; $jLoop < count($searchList['j']); $jLoop++) {
@@ -169,7 +169,8 @@ echo ($start->diff($end))->format('%s.%F')."\n";exit;
         }
 
         $date = new DateTime();
-        file_put_contents('db_narrow_down_test-'.$date->format('YmdHis').'.csv', $csv);
+        // UTF-8、BOM付きにしておく(jsと合わせるため)
+        file_put_contents('db_narrow_down_test-'.$date->format('YmdHis').'.csv', "\xef\xbb\xbf".$csv);
 
         ini_set('memory_limit', $limit);
     }
@@ -580,4 +581,4 @@ SQL;
 }
 
 $test  = new NarrowDownTest();
-$test->exec($argv);
+$test->exec();
