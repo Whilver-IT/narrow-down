@@ -157,7 +157,7 @@ const resize = (e) => {
 document.addEventListener('DOMContentLoaded', resize)
 document.addEventListener('DOMContentLoaded', (dcl) => {
     window.addEventListener('keydown', (e) => {
-        const direction = e.code == 'KeyP' ? -1 : (e.code == 'Enter' ? 1 : 0)
+        const direction = (e.code == 'KeyP' || e.code == 'ArrowLeft') ? -1 : ((e.code == 'Enter' || e.code == 'ArrowRight') ? 1 : 0)
         if (direction) {
             const nextPage = PageUtils.getMovePage(direction)
             if (nextPage) {
